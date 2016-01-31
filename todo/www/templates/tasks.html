@@ -1,0 +1,21 @@
+<ion-view>
+  <ion-nav-title>Tasks For {{vm.project.title}}
+  </ion-nav-title>
+  <ion-nav-buttons side="right">
+    <button class="button button-icon" ng-click="vm.showTaskModal()">
+      <i class="icon ion-compose"></i>
+    </button>
+  </ion-nav-buttons>
+
+  <ion-content>
+    <ion-list>
+      <ion-item class="item item-icon-right item-icon-left" ng-repeat=" task in vm.project.tasks | orderBy: ['completed','title']" ng-class="{completedTask: task.completed}">
+        <i class="icon" ng-class="task.completed ? 
+        'ion-checkmark-circled' : 
+        'ion-ios-circle-outline'" ng-click="vm.completeTask(task)">
+</i> {{task.title}}
+        <i class="icon ion-close icon-accessory" ng-click="vm.deleteTask(task)"></i>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
