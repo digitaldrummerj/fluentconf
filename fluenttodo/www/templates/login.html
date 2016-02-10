@@ -1,0 +1,56 @@
+<ion-view view-title="Login" hide-nav-bar="true">
+
+    <ion-content class="padding">
+
+        <div class="row responsive-sm padding removeBP login-div">
+            <div class="col">
+                <div class="app-logo"><img src="img/todo_logo.png"></div>
+                <div class="list removeBP">
+                    <form name="loginForm">
+                        <label class="item item-input">
+                            <input required type="text" placeholder="Email" ng-model="login.email">
+                        </label>
+                        <label class="item item-input">
+                            <input required type="password" placeholder="Password" ng-model="login.password">
+                        </label>
+                    </form>
+                </div>
+                <div class="loginButton">
+                    <button class="button button-block button-positive  ion-unlocked" ng-disabled="!loginForm.$valid" ng-click="login.signin()"> Login </button>
+                </div>
+                <div class="row padding removePM centerDiv">
+                    <div class="col">
+                        <a href="#/signup2" >Create Account</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row padding removePM centerDiv">
+            <div class="col">
+                <span>-or-</span>
+            </div>
+        </div>
+        <div class="row  padding removePM">
+
+            <div class="col">
+                <button class="button button-positive button-block" ng-click="login.socialSignin('facebook')"><i class="icon ion-social-facebook"></i> Facebook</button>
+            </div>
+            <div class="col">
+                <button class="button button-calm  button-block" ng-click="login.socialSignin('github')"><i class="icon ion-social-github"></i> Github</button>
+            </div>
+            <div class="col">
+                <button class="button button-assertive  button-block" ng-click="login.socialSignin('google')"><i class="icon ion-social-googleplus"></i> Google+</button>
+            </div>
+        </div>
+
+
+        <div class="row padding removePM">
+            <div class="col">
+                <h4 style="color:red;" ng-bind="login.error"></h4>
+
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

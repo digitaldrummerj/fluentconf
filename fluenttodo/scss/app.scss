@@ -1,0 +1,59 @@
+/* Empty. Add your own CSS if you like */
+.icon.new-item {
+	position: absolute;
+	right: 20px;
+	font-size: 20px;
+	bottom: 13px;
+}
+.cancel-create {
+	position: absolute;
+	right: 20px;
+	font-size: 14px;
+	bottom: 13px;
+	color:#ef4e3a;
+}
+[ng-click], [data-ng-click], [x-ng-click] {
+    cursor: pointer;
+}
+/* Ionic Overwrite! */
+.item-icon-left .icon, .item-icon-right .icon {
+	font-size: 22px;
+}
+
+/* Empty. Add your own CSS if you like */
+.icon.new-item {
+	position: absolute;
+	right: 20px;
+	font-size: 20px;
+	bottom: 13px;
+}
+.cancel-create {
+	position: absolute;
+	right: 20px;
+	font-size: 14px;
+	bottom: 13px;
+	color:#ef4e3a;
+}
+[ng-click], [data-ng-click], [x-ng-click] {
+    cursor: pointer;
+}
+/* Ionic Overwrite! */
+.item-icon-left .icon, .item-icon-right .icon {
+	font-size: 22px;
+}
+
+/* Empty. Add your own CSS if you like */
+
+.centerDiv{
+  display: inline-block; width:100%; margin: 0 auto;text-align: center;
+}
+
+.login-div {
+  opacity: 0.93 ;
+  /*padding: 30px;*/
+}
+
+.removePM{ margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; }
+.removeBP{ padding-bottom:0px;}
+.loginButton{ padding-bottom:0px;}
+.app-logo{ max-width:100px; margin:auto; background-repeat:no-repeat;background-position:center;}
