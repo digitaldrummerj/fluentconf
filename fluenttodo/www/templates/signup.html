@@ -8,31 +8,31 @@
                 <div class="list removeBP">
                     <form name="loginForm">
                         <label class="item item-input">
-                            <input id="email" name="email" required type="email" placeholder="Your email" ng-model="vm.email">
+                            <input id="email" name="email" required type="email" placeholder="Your email" ng-model="signup.email">
                         </label>
                         <label class="item item-input">
-                            <input id="firstname" name="firstname" type="text" placeholder="Your first name" ng-model="vm.firstName">
+                            <input id="firstname" name="firstname" type="text" placeholder="Your first name" ng-model="signup.firstName">
                         </label>
                         <label class="item item-input">
-                            <input id="username" name="lastname" type="text" placeholder="Your last name" ng-model="vm.lastName">
+                            <input id="username" name="lastname" type="text" placeholder="Your last name" ng-model="signup.lastName">
                         </label>
 
                         <label class="item item-input">
-                            <input id="password" required name="password" type="password" placeholder="Your password" ng-model="vm.password">
+                            <input id="password" required name="password" type="password" placeholder="Your password" ng-model="signup.password">
                         </label>
                         <label class="item item-input">
-                            <input id="again" required name="again" type="password" placeholder="confirm your password" ng-model="vm.again">
+                            <input id="again" required name="again" type="password" placeholder="confirm your password" ng-model="signup.again">
                         </label>
 
 
                     </form>
                 </div>
                 <div class="loginButton">
-                    <button class="button button-block button-positive" ng-disabled="!loginForm.$valid" ng-click="vm.signup()"> Create Account </button>
+                    <button class="button button-block button-positive" ng-disabled="!loginForm.$valid" ng-click="signup.signup()"> Create Account </button>
                 </div>
                 <div class="row padding removePM centerDiv">
                     <div class="col">
-                        <a href="#/login2">Cancel</a>
+                        <a href="#/login">Cancel</a>
                     </div>
                 </div>
 

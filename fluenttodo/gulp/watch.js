@@ -12,7 +12,7 @@ var inject = require('./inject');
 function watch() {
   return gulp.task('watch', function () {
     gulp.watch(files.styles, styles.compileStyles);
-    gulp.watch(fileCollections.scriptsAndStyles, inject.injectJsAndCss);
+    gulp.watch([files.scripts, files.styles], inject.injectJsAndCss);
   });
 }
 

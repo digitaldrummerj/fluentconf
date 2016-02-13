@@ -3,8 +3,13 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('todo', ['ionic', 'todo.services', 'backand'])
-
+angular.module('todo', [
+  'ionic',
+  'todo.services',
+  'backand',
+  'todo.backand',
+  'todo.config.constants'
+])
   .run(function ($ionicPlatform, $rootScope, $state, Backand) {
     $ionicPlatform.ready(function () {
       if (window.cordova && window.cordova.plugins.Keyboard) {
@@ -32,36 +37,45 @@ angular.module('todo', ['ionic', 'todo.services', 'backand'])
       $state.go('login');
     });
   })
-  .config(function (BackandProvider, $stateProvider, $urlRouterProvider, $httpProvider) {
-    BackandProvider.setAppName('ddjtodo');
-    BackandProvider.setSignUpToken('b9d096ad-a2bd-49cd-9a16-0ed28d839e24');
-    BackandProvider.setAnonymousToken('9ebbac2a-6704-42e5-91be-608b78475da2');
+  .config(function (BackandProvider, $stateProvider, $urlRouterProvider, $httpProvider, CONSTS) {
+    BackandProvider.setAnonymousToken(CONSTS.anonymousToken);
+    BackandProvider.setSignUpToken(CONSTS.signUpToken);
+    BackandProvider.setAppName(CONSTS.appName);
+
+    $urlRouterProvider.otherwise('/login');
+    $httpProvider.interceptors.push('APIInterceptor');
 
     $stateProvider
-    // setup an abstract state for the tabs directive
       .state('tab', {
-        url: '/tabs',
+        url: '/tab',
         abstract: true,
         templateUrl: 'templates/tabs.html'
       })
-       .state('tab.projects', {
-            url: '/projects',
-            views: {
-                'tab-projects': {
-                    templateUrl: 'templates/tab-projects.html',
-                    controller: 'ProjectsController as vm'
-                }
-            }
-        })
+      .state('tab.projects', {
+        url: '/projects',
+        views: {
+          'tab-projects': {
+            templateUrl: 'templates/tab-projects.html',
+            controller: 'ProjectsController as vm'
+          }
+        }
+      })
       .state('tab.tasks', {
-        url: '/tasks/:index',
-        controller: 'TasksController',
-        controllerAs: 'vm',
-        templateUrl: 'templates/tasks.html',
-        resolve: {
-          /* @ngInject */
-          project: function ($stateParams, ProjectService) {
-            return ProjectService.getProject($stateParams.index);
+        url: '/tasks/:projectId',
+        params: {
+          projectName: ""
+        },
+        views: {
+          'tab-projects': {
+            templateUrl: 'templates/tab-project-tasks.html',
+            controller: 'TasksController as vm',
+            resolve: {
+              /* @ngInject */
+              tasks: function ($stateParams, TasksService) {
+                console.log('resolving tasks');
+                return TasksService.getTasks({ id: $stateParams.projectId });
+              }
+            }
           }
         }
       })
@@ -87,6 +101,4 @@ angular.module('todo', ['ionic', 'todo.services', 'backand'])
       })
     ;
 
-    $urlRouterProvider.otherwise('/login');
-    $httpProvider.interceptors.push('APIInterceptor');
   });

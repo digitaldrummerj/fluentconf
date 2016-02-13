@@ -16,6 +16,8 @@
       if (response.status === 401) {
         $rootScope.$broadcast('unauthorized');
       }
+      
+      console.log('api interceptor http error', response);
       return $q.reject(response);
     }
   }

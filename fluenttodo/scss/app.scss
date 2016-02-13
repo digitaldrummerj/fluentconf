@@ -1,51 +1,28 @@
 /* Empty. Add your own CSS if you like */
-.icon.new-item {
-	position: absolute;
-	right: 20px;
-	font-size: 20px;
-	bottom: 13px;
-}
-.cancel-create {
-	position: absolute;
-	right: 20px;
-	font-size: 14px;
-	bottom: 13px;
-	color:#ef4e3a;
-}
 [ng-click], [data-ng-click], [x-ng-click] {
     cursor: pointer;
 }
-/* Ionic Overwrite! */
-.item-icon-left .icon, .item-icon-right .icon {
-	font-size: 22px;
-}
 
-/* Empty. Add your own CSS if you like */
-.icon.new-item {
-	position: absolute;
-	right: 20px;
-	font-size: 20px;
-	bottom: 13px;
-}
-.cancel-create {
-	position: absolute;
-	right: 20px;
-	font-size: 14px;
-	bottom: 13px;
-	color:#ef4e3a;
-}
-[ng-click], [data-ng-click], [x-ng-click] {
-    cursor: pointer;
-}
-/* Ionic Overwrite! */
-.item-icon-left .icon, .item-icon-right .icon {
-	font-size: 22px;
-}
-
-/* Empty. Add your own CSS if you like */
 
 .centerDiv{
   display: inline-block; width:100%; margin: 0 auto;text-align: center;
+}
+
+.item-text-center
+{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    align-items: center;
+    top: 0;
+    height: 100%;
 }
 
 .login-div {

@@ -11,9 +11,14 @@
       <ion-item 
         class="item item-icon-right" 
         ng-repeat="project in vm.projects | orderBy:'title'"
-        ng-href="#/tasks/{{project.id}}"
+        ui-sref="tab.tasks({
+          projectId: project.id,
+          projectName: project.name
+          })
+          "
+        type="item-text-wrap" 
         >
-        {{project.title}}
+        {{project.name}}
         <i class="icon ion-chevron-right icon-accessory" ></i>
          <ion-option-button class="button-assertive"
                        ng-click="vm.deleteProject(project)">

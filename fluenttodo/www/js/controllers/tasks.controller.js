@@ -5,22 +5,34 @@
     .module('todo')
     .controller('TasksController', TasksController);
 
-  TasksController.$inject = ['ProjectService', 'project', '$ionicModal', '$scope'];
-  function TasksController(ProjectService, project, $ionicModal, $scope) {
+  TasksController.$inject = ['TasksService', '$stateParams', '$ionicModal', '$scope', 'tasks'];
+  function TasksController(TasksService, $stateParams, $ionicModal, $scope, tasks) {
+
     var vm = this;
-    vm.project = project;
-    console.log(project);
+    vm.tasks = tasks;
+    vm.stateParams = $stateParams;
+    console.log('TasksController tasks', tasks);
+    console.log('$stateparams', $stateParams);
+    vm.project = {
+      id: $stateParams.projectId,
+      name: $stateParams.projectName
+    };
+    console.log('TaskController.project', vm.project);
+
     vm.saveNewTask = saveNewTask;
     vm.showTaskModal = showTaskModal;
     vm.closeTaskModal = closeTaskModal;
     vm.completeTask = completeTask;
     vm.deleteTask = deleteTask;
-
     activate();
 
     ////////////////
 
     function activate() {
+      // TasksService.getTasks(vm.project).then(function (result) {
+      //   vm.tasks = result.data.data;
+      // });
+
       $ionicModal.fromTemplateUrl(
         'templates/modal-new-task.html',
         function (modal) {
@@ -32,12 +44,15 @@
         );
     }
 
+
     function saveNewTask(task) {
-      ProjectService.addTask(vm.project, task.title);
-      //vm.project.tasks.push(newTask);
-      vm.closeTaskModal();
-      
-      task.title = '';
+      TasksService.addTask(vm.project, task.name).then(function (result) {
+        //vm.project.tasks.push(newTask);
+        vm.closeTaskModal();
+        vm.tasks.data.push(result);
+        task.title = '';
+      });;
+
     }
 
     function showTaskModal() {
@@ -49,12 +64,15 @@
     }
 
     function completeTask(task) {
-      var updatedTask = ProjectService.completeTask(vm.project, task);
-      // task = updatedTask;
+      console.log('completeTask', task);
+      TasksService.completeTask(vm.project, task);
     }
-    
+
     function deleteTask(task) {
-      ProjectService.deleteTask(vm.project, task);
+      TasksService.deleteTask(vm.project, task).then(function (result) {
+        console.log('deleting row from vm.task', vm.tasks.data.indexOf(task));
+        vm.tasks.data.splice(vm.tasks.data.indexOf(task), 1);        
+       });
     }
   }
 })();

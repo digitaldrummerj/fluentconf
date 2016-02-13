@@ -17,7 +17,12 @@
     ////////////////
 
     function activate() {
-      vm.projects = ProjectService.getProjects();
+      ProjectService.getProjects().then(function (result) {
+        vm.projects = result.data.data;
+      }
+        , function errorCallback(response) {
+          console.log(response);
+        });
 
       $ionicModal.fromTemplateUrl(
         'templates/modal-new-project.html',
@@ -31,19 +36,25 @@
     }
 
     function saveNewProject(project) {
+      
       console.log(project);
-      var projectTitle = project.title;
-      if (projectTitle) {
-        var newProject = ProjectService.addProject(project.title);
-        console.log('projects', vm.projects);
-        
-        vm.closeProjectModal();
-        
-        $state.go('/tasks', { index: newProject.id});
+      var projectName = project.name;
+      if (projectName) {
+        ProjectService.addProject(project.name).then(function (result) {
+          console.log('project', result);
 
+          vm.projects.push(result.data);
+          
+          vm.closeProjectModal();
+          project.name = '';
+
+           $state.go('tab.tasks', { projectId: result.data.id }, { location: true });
+        }
+          , function errorCallback(response) {
+            console.log(response);
+          }
+          );
       }
-
-      project.title = '';
     }
 
     function showProjectModal() {
@@ -53,9 +64,16 @@
     function closeProjectModal() {
       vm.projectModal.hide();
     }
-    
+
     function deleteProject(project) {
-      ProjectService.deleteProject(project);
+      console.log('deleteProject', project, vm.projects);
+      ProjectService.deleteProject(project).then(function (result) {
+        console.log('deleting row from vm.task', vm.projects.indexOf(project));
+        vm.projects.splice(vm.projects.indexOf(project), 1);
+      },
+        function (error) {
+          console.log('error deleting project', error);
+        });
     }
   }
 })();

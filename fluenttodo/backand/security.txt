@@ -1,0 +1,2 @@
+Change Anonymous to be public so that they can't read anything by default.
+

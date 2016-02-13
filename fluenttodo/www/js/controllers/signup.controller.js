@@ -8,7 +8,7 @@
   SignUpController.$inject = ['Backand', '$state', '$rootScope', 'LoginService'];
   function SignUpController(Backand, $state, $rootScope, LoginService) {
     var vm = this;
-    vm.signup = signUp;
+    vm.signup = signup;
     vm.email = '';
     vm.password = '';
     vm.again = '';
@@ -22,7 +22,7 @@
 
     function activate() { }
 
-    function signUp() {
+    function signup() {
       console.log('signUp', vm.firstName, vm.lastName, vm.email, vm.password, vm.again);
       vm.errorMessage = '';
 
@@ -43,7 +43,7 @@
 
     function onLogin() {
       $rootScope.$broadcast('authorized');
-      $state.go('tab.dashboard');
+      $state.go('tab.projects');
     }
 
   }

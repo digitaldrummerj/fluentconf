@@ -5,9 +5,9 @@
         .module('todo.services')
         .service('UserModel', UserModel);
 
-    UserModel.$inject = ['$http', 'Backand', 'LoginService'];
+    UserModel.$inject = ['$http', 'BackandDataService', 'LoginService'];
 
-    function UserModel($http, Backand, LoginService) {
+    function UserModel($http, BackandDataService, LoginService) {
 
         var service = this;
 
