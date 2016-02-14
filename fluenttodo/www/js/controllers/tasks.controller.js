@@ -5,9 +5,9 @@
     .module('todo')
     .controller('TasksController', TasksController);
 
-  TasksController.$inject = ['TasksService', '$stateParams', '$ionicModal', '$scope', 'tasks', 'LoginService'];
-  function TasksController(TasksService, $stateParams, $ionicModal, $scope, tasks, LoginService) {
-    if (LoginService.verifyIsLoggedIn(true)) {
+  TasksController.$inject = ['TasksService', '$stateParams', '$ionicModal', '$scope', 'tasks'];
+  function TasksController(TasksService, $stateParams, $ionicModal, $scope, tasks) {
+
       var vm = this;
       vm.tasks = tasks;
       vm.stateParams = $stateParams;
@@ -25,7 +25,6 @@
       vm.completeTask = completeTask;
       vm.deleteTask = deleteTask;
       activate();
-    }
     ////////////////
 
     function activate() {

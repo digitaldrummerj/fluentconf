@@ -9777,3 +9777,7 @@ a.button {
   margin: auto;
   background-repeat: no-repeat;
   background-position: center; }
+
+.completedTask {
+  text-decoration: line-through;
+  color: #A9A9A9; }

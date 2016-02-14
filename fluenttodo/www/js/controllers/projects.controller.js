@@ -7,21 +7,19 @@
 
   ProjectsController.$inject = ['ProjectService', '$ionicModal', '$state', '$scope', 'LoginService', '$ionicListDelegate'];
   function ProjectsController(ProjectService, $ionicModal, $state, $scope, LoginService, $ionicListDelegate) {
-    if (LoginService.verifyIsLoggedIn(false)) {
-      
-      var vm = this;
-      vm.saveNewProject = saveNewProject;
-      vm.deleteProject = deleteProject;
-      vm.showProjectModal = showProjectModal;
-      vm.closeProjectModal = closeProjectModal;
-      activate();
-    }
+
+    var vm = this;
+    vm.saveNewProject = saveNewProject;
+    vm.deleteProject = deleteProject;
+    vm.showProjectModal = showProjectModal;
+    vm.closeProjectModal = closeProjectModal;
+    activate();
 
     ////////////////
 
     function activate() {
-      
-      
+
+
       ProjectService.getProjects().then(function (result) {
         vm.projects = result.data.data;
       }
@@ -41,7 +39,7 @@
     }
 
     function saveNewProject(project) {
-      
+
       console.log(project);
       var projectName = project.name;
       if (projectName) {
@@ -49,11 +47,11 @@
           console.log('project', result);
 
           vm.projects.push(result.data);
-          
+
           vm.closeProjectModal();
           project.name = '';
 
-           $state.go('tab.tasks', { projectId: result.data.id }, { location: true });
+          $state.go('tab.tasks', { projectId: result.data.id }, { location: true });
         }
           , function errorCallback(response) {
             console.log(response);

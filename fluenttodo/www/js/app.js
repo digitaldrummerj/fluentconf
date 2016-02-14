@@ -33,16 +33,21 @@ angular.module('todo', [
     });
 
     $rootScope.$on('$stateChangeStart', function (event, next, nextParams, fromState) {
-      if (!LoginService.verifyIsLoggedIn(false)) {
-        if (next.name !== 'login') {
+      console.log('state change');
+      if (next.name !== 'login') {
+        if (!LoginService.verifyIsLoggedIn(false)) {
           event.preventDefault();
-          $state.go('login');
+          return $state.go('login');
+        } else {
+          console.log('logged in already');
+          return;
         }
+      } else {
+        console.log("should be on login page");
       }
     });
 
     $rootScope.$on('BackandSignOut', function () {
-      event.preventDefault();
       $state.go('login');
     });
   })
@@ -50,7 +55,11 @@ angular.module('todo', [
     BackandProvider.setAnonymousToken(CONSTS.anonymousToken);
     BackandProvider.setSignUpToken(CONSTS.signUpToken);
     BackandProvider.setAppName(CONSTS.appName);
-    $urlRouterProvider.otherwise('/projects');
+    // $urlRouterProvider.otherwise('/projects');
+    $urlRouterProvider.otherwise(function ($injector) {
+      var $state = $injector.get("$state");
+      $state.go("tab.projects");
+    });
     $httpProvider.interceptors.push('APIInterceptor');
 
     $stateProvider
