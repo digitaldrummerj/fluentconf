@@ -1,13 +1,13 @@
-(function() {
+(function () {
   'use strict';
 
   angular
     .module('todo.services')
     .service('LoginService', LoginService);
 
-  LoginService.$inject = ['Backand'];
+  LoginService.$inject = ['Backand', '$q'];
 
-  function LoginService(Backand) {
+  function LoginService(Backand, $q) {
     var service = this;
     service.signin = signin;
     service.anonymousLogin = anonymousLogin;
@@ -49,22 +49,27 @@
 
     function getUserDetails() {
       console.log('getUserDetails');
-      if (verifyIsLoggedIn()){
-        return Backand.getUserDetails().then(function(response){
+      if (verifyIsLoggedIn()) {
+        return Backand.getUserDetails().then(function (response) {
           console.log('user details', response);
           return response;
         });
       }
-      
+
 
     }
 
-    function verifyIsLoggedIn() {
+    function verifyIsLoggedIn(signOutIfNotLoggedIn) {
       if (Backand.getToken() === null) {
-        signout();
+        event.preventDefault();
+        if (signOutIfNotLoggedIn !== null && signOutIfNotLoggedIn === true) {
+          signout();
+        }
+        console.log('not logged in');
         return false;
       }
-      
+
+      console.log('logged in');
       return true;
     }
   }

@@ -5,30 +5,31 @@
     .module('todo')
     .controller('TasksController', TasksController);
 
-  TasksController.$inject = ['TasksService', '$stateParams', '$ionicModal', '$scope', 'tasks'];
-  function TasksController(TasksService, $stateParams, $ionicModal, $scope, tasks) {
+  TasksController.$inject = ['TasksService', '$stateParams', '$ionicModal', '$scope', 'tasks', 'LoginService'];
+  function TasksController(TasksService, $stateParams, $ionicModal, $scope, tasks, LoginService) {
+    if (LoginService.verifyIsLoggedIn(true)) {
+      var vm = this;
+      vm.tasks = tasks;
+      vm.stateParams = $stateParams;
+      console.log('TasksController tasks', tasks);
+      console.log('$stateparams', $stateParams);
+      vm.project = {
+        id: $stateParams.projectId,
+        name: $stateParams.projectName
+      };
+      console.log('TaskController.project', vm.project);
 
-    var vm = this;
-    vm.tasks = tasks;
-    vm.stateParams = $stateParams;
-    console.log('TasksController tasks', tasks);
-    console.log('$stateparams', $stateParams);
-    vm.project = {
-      id: $stateParams.projectId,
-      name: $stateParams.projectName
-    };
-    console.log('TaskController.project', vm.project);
-
-    vm.saveNewTask = saveNewTask;
-    vm.showTaskModal = showTaskModal;
-    vm.closeTaskModal = closeTaskModal;
-    vm.completeTask = completeTask;
-    vm.deleteTask = deleteTask;
-    activate();
-
+      vm.saveNewTask = saveNewTask;
+      vm.showTaskModal = showTaskModal;
+      vm.closeTaskModal = closeTaskModal;
+      vm.completeTask = completeTask;
+      vm.deleteTask = deleteTask;
+      activate();
+    }
     ////////////////
 
     function activate() {
+      
       // TasksService.getTasks(vm.project).then(function (result) {
       //   vm.tasks = result.data.data;
       // });
@@ -50,7 +51,7 @@
         //vm.project.tasks.push(newTask);
         vm.closeTaskModal();
         vm.tasks.data.push(result);
-        task.title = '';
+        task.name = '';
       });;
 
     }

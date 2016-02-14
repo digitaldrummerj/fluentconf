@@ -5,18 +5,23 @@
     .module('todo')
     .controller('ProjectsController', ProjectsController);
 
-  ProjectsController.$inject = ['ProjectService', '$ionicModal', '$state', '$scope'];
-  function ProjectsController(ProjectService, $ionicModal, $state, $scope) {
-    var vm = this;
-    vm.saveNewProject = saveNewProject;
-    vm.deleteProject = deleteProject;
-    vm.showProjectModal = showProjectModal;
-    vm.closeProjectModal = closeProjectModal;
-    activate();
+  ProjectsController.$inject = ['ProjectService', '$ionicModal', '$state', '$scope', 'LoginService', '$ionicListDelegate'];
+  function ProjectsController(ProjectService, $ionicModal, $state, $scope, LoginService, $ionicListDelegate) {
+    if (LoginService.verifyIsLoggedIn(false)) {
+      
+      var vm = this;
+      vm.saveNewProject = saveNewProject;
+      vm.deleteProject = deleteProject;
+      vm.showProjectModal = showProjectModal;
+      vm.closeProjectModal = closeProjectModal;
+      activate();
+    }
 
     ////////////////
 
     function activate() {
+      
+      
       ProjectService.getProjects().then(function (result) {
         vm.projects = result.data.data;
       }
@@ -73,6 +78,7 @@
       },
         function (error) {
           console.log('error deleting project', error);
+          $ionicListDelegate.closeOptionButtons();
         });
     }
   }

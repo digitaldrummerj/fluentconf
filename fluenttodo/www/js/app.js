@@ -10,7 +10,7 @@ angular.module('todo', [
   'todo.backand',
   'todo.config.constants'
 ])
-  .run(function ($ionicPlatform, $rootScope, $state, Backand) {
+  .run(function ($ionicPlatform, $rootScope, $state, Backand, LoginService) {
     $ionicPlatform.ready(function () {
       if (window.cordova && window.cordova.plugins.Keyboard) {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -32,8 +32,17 @@ angular.module('todo', [
 
     });
 
+    $rootScope.$on('$stateChangeStart', function (event, next, nextParams, fromState) {
+      if (!LoginService.verifyIsLoggedIn(false)) {
+        if (next.name !== 'login') {
+          event.preventDefault();
+          $state.go('login');
+        }
+      }
+    });
+
     $rootScope.$on('BackandSignOut', function () {
-      console.log("user is signed out, sending to login");
+      event.preventDefault();
       $state.go('login');
     });
   })
@@ -41,8 +50,7 @@ angular.module('todo', [
     BackandProvider.setAnonymousToken(CONSTS.anonymousToken);
     BackandProvider.setSignUpToken(CONSTS.signUpToken);
     BackandProvider.setAppName(CONSTS.appName);
-
-    $urlRouterProvider.otherwise('/login');
+    $urlRouterProvider.otherwise('/projects');
     $httpProvider.interceptors.push('APIInterceptor');
 
     $stateProvider
