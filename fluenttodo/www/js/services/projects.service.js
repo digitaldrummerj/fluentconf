@@ -9,28 +9,17 @@
   function ProjectService($http, BackandDataService, UserModel) {
     var service = {
       getProjects: getProjects,
-      getProject: getProject,
       addProject: addProject,
       deleteProject: deleteProject,
     },
       objectName = 'project';
-
-    var data = [];
-    getProjects();
     return service;
 
     ////////////////
-    function getProject(id) {
 
-      for (var i = 0; i < data.length; i++) {
-        if (data[i].id == id) {
-          return data[i];
-        }
-      }
-    }
-
-    function getProjects() {
-      return BackandDataService.getList(objectName);
+    function getProjects(pageNumber, pageSize) {
+      var sort = null, filter = null;
+      return BackandDataService.getList(objectName, sort, filter, pageNumber || 1, pageSize || 10);
     }
 
     function addProject(name) {
@@ -39,7 +28,7 @@
         "created_on": new Date()
       };
 
-      return BackandDataService.saveItem(objectName + '?returnObject=true', project);
+      return BackandDataService.saveItem(objectName, project, { returnObject: true});
     }
 
     function deleteProject(project) {

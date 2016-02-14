@@ -6,11 +6,11 @@
   </ion-nav-buttons>
 
   <ion-content>
-
+    <ion-refresher pulling-text="Pull to refresh" on-refresh="vm.doRefresh()"></ion-refresher>
     <ion-list>
       <ion-item 
         class="item item-icon-right" 
-        ng-repeat="project in vm.projects | orderBy:'title'"
+        ng-repeat="project in vm.projects | orderBy:'name'"
         ui-sref="tab.tasks({
           projectId: project.id,
           projectName: project.name
@@ -27,5 +27,11 @@
 
       </ion-item>
     </ion-list>
+      <ion-infinite-scroll on-infinite="vm.getMoreProjects()"
+      ng-if="vm.moreDataCanBeLoaded && !vm.refreshing && vm.projects.length === 0"
+      immediate-check="false"
+      
+      ></ion-infinite-scroll>
+    
   </ion-content>
 </ion-view>

@@ -17,13 +17,13 @@
     return service;
 
     ////////////////
-    function getList(objectName, sort, filter, returnObject) {
+    function getList(objectName, sort, filter, pageNumber, pageSize) {
       return $http({
         method: 'GET',
         url: getBaseUrl() + objectName,
         params: {
-          pageSize: 20,
-          pageNumber: 1,
+          pageSize: pageSize || 10,
+          pageNumber: pageNumber || 1,
           filter: filter || '',
           sort: sort || ''
         }
@@ -31,19 +31,19 @@
     }
 
     function saveItem(objectName, data, params) {
-      console.log('back& managing', Backand.isManagingHttpInterceptor());
-      return $http.post(getBaseUrl() + objectName, data).then(function (response) {             console.log('item created', response);
-        return response;
-})
-
-      // return $http({
-      //   method: 'post',
-      //   url: getBaseUrl() + objectName,
-      //   data: data,
-      //   params: params || {
-      //     returnObject: true
-      //   }
+      // return $http.post(getBaseUrl() + objectName, data).then(function (response) {
+      //   console.log('item created', response);
+      //   return response;
       // });
+
+      return $http({
+        method: 'post',
+        url: getBaseUrl() + objectName,
+        data: data,
+        params: params || {
+          returnObject: true
+        }
+      });
     }
 
     function updateItem(objectName, id, data) {
@@ -60,7 +60,7 @@
         url: getBaseUrl() + objectName + '/' + id
       });
     }
-    
+
     function getBaseUrl() {
       return Backand.getApiUrl() + '/1/objects/';
     }
